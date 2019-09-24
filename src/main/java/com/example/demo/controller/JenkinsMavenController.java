@@ -10,7 +10,7 @@ public class JenkinsMavenController {
 
 	@GetMapping
 	public String hello() {
-		return "hello sqq ";
+		return "hello islem ";
 	}
 
 }
