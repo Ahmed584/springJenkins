@@ -20,7 +20,7 @@ pipeline {
                  mvn clean package'''
             }
         }
-        stage('build Image'){
+        stage('build and push Image'){
             steps {
                 sh'pwd'
                 sh ' ls'
@@ -30,8 +30,12 @@ pipeline {
             docker build -t test-jenkins .
             docker run -p 7072:9001 -d test-jenkins'''
              sh 'docker ps'
+             sh 'docker images'
+          withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
+            sh 'docker tag test-jenkins:latest akrout123/test-jenkins:$BUILD_NUMBER'
+          sh 'docker push akrout123/test-jenkins:$BUILD_NUMBER'
+        }
             }
-           
         }
     }
 }
